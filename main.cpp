@@ -1,14 +1,100 @@
 #include <cstdio>
 #include "List.h"
+#include "Multiset.h"
 #include "Node.h"
 
 int main()
 {
-    List<int> list;
+    Multiset<int> multiset, m2;
 
-    list.push_back(10);
-    list.push_back(20);
+    multiset.insert(0);
+    multiset.insert(0);
+    multiset.insert(1);
+    multiset.insert(1);
+    multiset.insert(1);
 
-    printf("%d %d\n", list.head->value, list.tail->value);
+    m2.insert(0);
+    m2.insert(2);
+    m2.insert(3);
+
+    printf("Tam = %d\n", multiset.length);
+
+    for (auto it = multiset.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+
+    puts("");
+
+    printf("Tam = %d\n", m2.length);
+
+    for (auto it = m2.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+    puts("");
+
+    printf("%d\n", multiset.belongs_to(0));
+    printf("%d\n", multiset.belongs_to(3));
+
+    puts("");
+
+    printf("%d\n", multiset.frequency(0));
+    printf("%d\n", multiset.frequency(1));
+
+    puts("");
+
+    multiset.erase(1);
+
+    printf("Tam = %d\n", multiset.length);
+
+    for (auto it = multiset.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+
+    auto m3 = multiset.union_multiset(m2);
+
+    puts("");
+
+    printf("Tam = %d\n", m3.length);
+
+    for (auto it = m3.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+
+    puts("");
+
+    auto m4 = multiset.intersection_multiset(m2);
+
+    puts("");
+
+    printf("Tam = %d\n", m4.length);
+
+    for (auto it = m4.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+
+    multiset.insert(2);
+    multiset.insert(3);
+    auto m5 = multiset.difference_multiset(m2);
+
+    puts("");
+
+    printf("Tam = %d\n", m5.length);
+
+    for (auto it = m5.begin(); it != nullptr;)
+    {
+        printf("%d %d\n", it->value, it->num_ocurrences);
+        it = it->next;
+    }
+
     return 0;
 }
