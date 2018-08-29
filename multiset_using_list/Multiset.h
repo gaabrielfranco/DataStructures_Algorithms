@@ -17,14 +17,14 @@ class Multiset
         this->length = 0;
     }
 
-    Node<T>* begin()
+    ~Multiset()
     {
-        return multiset->head;
+        delete this->multiset;
     }
 
-    Node<T>* end()
+    Node<T>* begin() const
     {
-        return multiset->tail;
+        return multiset->head;
     }
 
     void insert(T value)
@@ -72,7 +72,7 @@ class Multiset
         this->length--;
     }
 
-    Multiset<T> union_multiset(Multiset<T> multiset)
+    Multiset<T> union_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
 
@@ -97,7 +97,7 @@ class Multiset
         return new_multiset;
     }
 
-    Multiset<T> intersection_multiset(Multiset<T> multiset)
+    Multiset<T> intersection_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
 
@@ -125,7 +125,7 @@ class Multiset
         return new_multiset;
     }
 
-    Multiset<T> difference_multiset(Multiset<T> multiset)
+    Multiset<T> difference_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
         bool match = false;
