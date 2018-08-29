@@ -22,7 +22,7 @@ class Multiset
         delete this->multiset;
     }
 
-    Node<T>* begin() const
+    const Node<T>* begin() const
     {
         return multiset->head;
     }
