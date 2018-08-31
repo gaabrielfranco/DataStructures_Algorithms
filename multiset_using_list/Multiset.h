@@ -90,6 +90,18 @@ class Multiset
             {
                 if (it == this->head)
                 {
+                    if (it == this->tail)
+                    {
+                        // Conferir com o Jansen
+                        num_elem = it->num_ocurrences;
+
+                        delete it;
+
+                        this->head = this->tail = nullptr;
+
+                        break;
+                    }
+
                     it->next->previous = nullptr;
                     this->head = it->next;
                     num_elem = it->num_ocurrences;
@@ -133,8 +145,17 @@ class Multiset
             {
                 if (it->num_ocurrences == 1)
                 {
-                    it->previous->next = it->next;
-                    it->next->previous = it->previous;
+                    if (this->head == this->tail)
+                    {
+                        delete it;
+
+                        this->head = this->tail = nullptr;
+                    }
+                    else
+                    {
+                        it->previous->next = it->next;
+                        it->next->previous = it->previous;
+                    }
 
                     delete it;
                 }
@@ -158,7 +179,7 @@ class Multiset
 
     bool belongs_to(T value)
     {
-        for (auto it = this->multiset->head; it != nullptr;)
+        for (auto it = this->head; it != nullptr;)
         {
             if (it->value == value)
             {
@@ -172,7 +193,7 @@ class Multiset
 
     size_t frequency(T value)
     {
-        for (auto it = this->multiset->head; it != nullptr;)
+        for (auto it = this->head; it != nullptr;)
         {
             if (it->value == value)
             {
@@ -188,7 +209,7 @@ class Multiset
     {
         Multiset<T> new_multiset;
 
-        for (auto it = this->multiset->head; it != nullptr;)
+        for (auto it = this->head; it != nullptr;)
         {
             for (size_t i = 0; i < it->num_ocurrences; i++)
             {
@@ -213,7 +234,7 @@ class Multiset
     {
         Multiset<T> new_multiset;
 
-        for (auto it = this->multiset->head; it != nullptr;)
+        for (auto it = this->head; it != nullptr;)
         {
             for (auto it2 = multiset.begin(); it2 != nullptr;)
             {
@@ -242,7 +263,7 @@ class Multiset
         Multiset<T> new_multiset;
         bool match = false;
 
-        for (auto it = this->multiset->head; it != nullptr;)
+        for (auto it = this->head; it != nullptr;)
         {
             for (auto it2 = multiset.begin(); it2 != nullptr;)
             {
@@ -277,6 +298,20 @@ class Multiset
         }
 
         return new_multiset;
+    }
+
+    void print()
+    {
+        printf("{ ");
+        for (auto it = this->head; it != nullptr;)
+        {
+            for (size_t i = 0; i < it->num_ocurrences; i++)
+            {
+                printf("%d ", it->value);
+            }
+            it = it->next;
+        }
+        puts("}");
     }
 };
 #endif

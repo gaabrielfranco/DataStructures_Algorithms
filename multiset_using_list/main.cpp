@@ -4,6 +4,13 @@
 int main()
 {
     Multiset<int> multiset;
-    puts("Oi");
+    multiset.insert(0);
+
+    multiset.print();
+
+    multiset.remove(0);
+
+    multiset.print();
+
     return 0;
 }
