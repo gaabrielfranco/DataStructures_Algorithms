@@ -2,35 +2,158 @@
 #define MULTISET_H
 
 #include <algorithm>
-#include "List.h"
 
 template <class T>
 class Multiset
 {
-   public:
-    List<T>* multiset;
+    struct Node
+    {
+        T value;
+        size_t num_ocurrences;
+        Node* previous;
+        Node* next;
+
+        Node()
+        {
+            previous = nullptr;
+            next = nullptr;
+        }
+
+        ~Node()
+        {
+            previous = nullptr;
+            next = nullptr;
+        }
+    };
+
+    Multiset<T>::Node* head;
+    Multiset<T>::Node* tail;
     size_t length;
 
+   public:
     Multiset()
     {
-        this->multiset = new List<T>;
+        this->head = nullptr;
+        this->tail = nullptr;
         this->length = 0;
     }
 
     ~Multiset()
     {
-        delete this->multiset;
-    }
-
-    const Node<T>* begin() const
-    {
-        return multiset->head;
+        for (auto it = this->head; it != nullptr;)
+        {
+            auto next = it->next;
+            delete it;
+            it = next;
+        }
+        this->length = 0;
     }
 
     void insert(T value)
     {
-        this->multiset->push_back(value);
+        for (auto it = this->head; it != nullptr;)
+        {
+            if (it->value == value)
+            {
+                it->num_ocurrences++;
+                return;
+            }
+            it = it->next;
+        }
+
+        auto new_node = new Multiset<T>::Node;
+        new_node->value = value;
+        new_node->num_ocurrences = 1;
+
+        if (this->head == nullptr && this->tail == nullptr)
+        {
+            this->head = new_node;
+            this->tail = new_node;
+        }
+        else
+        {
+            this->tail->next = new_node;
+            new_node->previous = this->tail;
+            this->tail = new_node;
+        }
+
         this->length++;
+    }
+
+    void erase(T value)
+    {
+        size_t num_elem = 0;
+
+        for (auto it = this->head; it != nullptr;)
+        {
+            if (it->value == value)
+            {
+                if (it == this->head)
+                {
+                    it->next->previous = nullptr;
+                    this->head = it->next;
+                    num_elem = it->num_ocurrences;
+
+                    delete it;
+
+                    break;
+                }
+                else if (it == this->tail)
+                {
+                    it->previous->next = nullptr;
+                    this->tail = it->previous;
+                    num_elem = it->num_ocurrences;
+
+                    delete it;
+
+                    break;
+                }
+                else
+                {
+                    it->previous->next = it->next;
+                    it->next->previous = it->previous;
+                    num_elem = it->num_ocurrences;
+
+                    delete it;
+
+                    break;
+                }
+            }
+            it = it->next;
+        }
+
+        this->length -= num_elem;
+    }
+
+    void remove(T value)
+    {
+        for (auto it = this->head; it != nullptr;)
+        {
+            if (it->value == value)
+            {
+                if (it->num_ocurrences == 1)
+                {
+                    it->previous->next = it->next;
+                    it->next->previous = it->previous;
+
+                    delete it;
+                }
+                else
+                {
+                    it->num_ocurrences--;
+                }
+
+                this->length--;
+
+                return;
+            }
+            it = it->next;
+        }
+    }
+
+    const Multiset<T>::Node* begin() const
+    {
+        return this->head;
     }
 
     bool belongs_to(T value)
@@ -59,17 +182,6 @@ class Multiset
         }
 
         return 0;
-    }
-
-    void erase(T value)
-    {
-        this->length -= this->multiset->erase(value);
-    }
-
-    void remove(T value)
-    {
-        this->multiset->remove(value);
-        this->length--;
     }
 
     Multiset<T> union_multiset(const Multiset<T>& multiset)

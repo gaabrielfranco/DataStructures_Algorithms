@@ -4,9 +4,32 @@
 template <class T>
 class Tree
 {
-   public:
-    Node<T>* root;
+    struct Node
+    {
+       public:
+        T key;
+        size_t num_ocurrences;
+        Node<T>* left;
+        Node<T>* rigth;
+        Node<T>* dad;
 
+        Node()
+        {
+            this->left = nullptr;
+            this->rigth = nullptr;
+            this->dad = nullptr;
+        }
+
+        ~Node()
+        {
+            this->left = nullptr;
+            this->rigth = nullptr;
+            this->dad = nullptr;
+        }
+    };
+    Tree<T>::Node* root;
+
+   public:
     Tree()
     {
         root = nullptr;
@@ -21,6 +44,7 @@ class Tree
         }
         else
         {
+            return;
             // search
             // Se achar, num_occurr++, senão, insere
         }
