@@ -6,6 +6,7 @@
 template <class T>
 class Multiset
 {
+   public:
     struct Node
     {
         T value;
@@ -18,19 +19,39 @@ class Multiset
             previous = nullptr;
             next = nullptr;
         }
-
-        ~Node()
-        {
-            previous = nullptr;
-            next = nullptr;
-        }
     };
 
+   private:
     Multiset<T>::Node* head;
     Multiset<T>::Node* tail;
     size_t length;
 
    public:
+    class Iterator
+    {
+        Multiset<T>::Node* pointer;
+
+       public:
+        Iterator(Multiset<T>::Node* pointer) : pointer(pointer)
+        {
+        }
+        bool operator!=(const Iterator& it)
+        {
+            return this->pointer != it.pointer;
+        }
+
+        Iterator& operator++()
+        {
+            this->pointer = this->pointer->next;
+            return *this;
+        }
+
+        Node& operator*()
+        {
+            return *(this->pointer);
+        }
+    };
+
     Multiset()
     {
         this->head = nullptr;
@@ -47,6 +68,78 @@ class Multiset
             it = next;
         }
         this->length = 0;
+    }
+
+    Multiset(const Multiset& multiset)
+    {
+        Multiset<T>::Node* cursor;
+
+        for (auto& it : multiset)
+        {
+            auto node = new Multiset<T>::Node;
+            node->value = it.value;
+            node->num_ocurrences = it.num_ocurrences;
+
+            if (&it == multiset.head)
+            {
+                this->head = node;
+            }
+            else
+            {
+                cursor->next = node;
+                node->previous = cursor;
+            }
+
+            cursor = node;
+        }
+
+        this->tail = cursor;
+    }
+
+    Multiset(Multiset&& multiset)
+    {
+        this->head = multiset.head;
+        this->tail = multiset.tail;
+        multiset.head = nullptr;
+        multiset.tail = nullptr;
+    }
+
+    Multiset& operator=(const Multiset& multiset)
+    {
+        Multiset<T>::Node* cursor;
+
+        for (auto& it : multiset)
+        {
+            auto node = new Multiset<T>::Node;
+            node->value = it.value;
+            node->num_ocurrences = it.num_ocurrences;
+
+            if (&it == multiset.head)
+            {
+                this->head = node;
+            }
+            else
+            {
+                cursor->next = node;
+                node->previous = cursor;
+            }
+
+            cursor = node;
+        }
+
+        this->tail = cursor;
+
+        return *this;
+    }
+
+    Multiset& operator=(Multiset&& multiset)
+    {
+        this->head = multiset.head;
+        this->tail = multiset.tail;
+        multiset.head = nullptr;
+        multiset.tail = nullptr;
+
+        return *this;
     }
 
     void insert(T value)
@@ -92,7 +185,6 @@ class Multiset
                 {
                     if (it == this->tail)
                     {
-                        // Conferir com o Jansen
                         num_elem = it->num_ocurrences;
 
                         delete it;
@@ -172,12 +264,17 @@ class Multiset
         }
     }
 
-    const Multiset<T>::Node* begin() const
+    Multiset<T>::Iterator begin() const
     {
-        return this->head;
+        return Multiset<T>::Iterator(this->head);
     }
 
-    bool belongs_to(T value)
+    Multiset<T>::Iterator end() const
+    {
+        return Multiset<T>::Iterator(this->tail->next);
+    }
+
+    bool has(T value)
     {
         for (auto it = this->head; it != nullptr;)
         {
@@ -218,7 +315,7 @@ class Multiset
             it = it->next;
         }
 
-        for (auto it = multiset.begin(); it != nullptr;)
+        for (auto it = multiset.head; it != nullptr;)
         {
             for (size_t i = 0; i < it->num_ocurrences; i++)
             {
@@ -236,7 +333,7 @@ class Multiset
 
         for (auto it = this->head; it != nullptr;)
         {
-            for (auto it2 = multiset.begin(); it2 != nullptr;)
+            for (auto it2 = multiset.head; it2 != nullptr;)
             {
                 if (it->value == it2->value)
                 {
@@ -265,7 +362,7 @@ class Multiset
 
         for (auto it = this->head; it != nullptr;)
         {
-            for (auto it2 = multiset.begin(); it2 != nullptr;)
+            for (auto it2 = multiset.head; it2 != nullptr;)
             {
                 if (it->value == it2->value)
                 {
@@ -312,6 +409,29 @@ class Multiset
             it = it->next;
         }
         puts("}");
+    }
+
+    Multiset<T>::Node* get_head()
+    {
+        return this->head;
+    }
+
+    Multiset<T>::Node* get_tail()
+    {
+        return this->tail;
+    }
+
+    Multiset<T>::Node& operator[](T value)
+    {
+        for (auto& it : *this)
+        {
+            if (it.value == value)
+            {
+                return it;
+            }
+        }
+
+        throw "Value doesn't exists.";
     }
 };
 #endif

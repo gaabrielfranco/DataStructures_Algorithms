@@ -31,7 +31,12 @@
         "deque": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "algorithm": "cpp"
     },
     "editor.formatOnSave": true
 }
