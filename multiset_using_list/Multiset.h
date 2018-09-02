@@ -158,16 +158,45 @@ class Multiset
         new_node->value = value;
         new_node->num_ocurrences = 1;
 
-        if (this->head == nullptr && this->tail == nullptr)
+        if (!this->length)
         {
             this->head = new_node;
             this->tail = new_node;
+            this->length++;
+
+            return;
         }
-        else
+
+        Multiset<T>::Node* greater = nullptr;
+
+        for (auto& it : *this)
+        {
+            if (it.value > value)
+            {
+                greater = &it;
+                break;
+            }
+        }
+
+        if (!greater)
         {
             this->tail->next = new_node;
             new_node->previous = this->tail;
             this->tail = new_node;
+        }
+        else if (greater == this->head)
+        {
+            this->head->previous = new_node;
+            new_node->next = this->head;
+            this->head = new_node;
+        }
+        else
+        {
+            new_node->next = greater;
+            new_node->previous = greater->previous;
+
+            greater->previous->next = new_node;
+            greater->previous = new_node;
         }
 
         this->length++;

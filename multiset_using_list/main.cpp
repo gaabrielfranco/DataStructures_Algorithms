@@ -11,7 +11,9 @@ int main()
     multiset.insert(1);
     multiset.insert(1);
     multiset.insert(2);
+    multiset.insert(5);
     multiset.insert(3);
+
     m2.insert(1);
     m2.insert(2);
     m2.insert(4);
