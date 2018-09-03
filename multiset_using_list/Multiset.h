@@ -462,5 +462,10 @@ class Multiset
 
         throw "Value doesn't exists.";
     }
+
+    size_t length()
+    {
+        return this->length;
+    }
 };
 #endif
