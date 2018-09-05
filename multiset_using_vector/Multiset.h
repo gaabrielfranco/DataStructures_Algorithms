@@ -64,26 +64,23 @@ class Multiset
     {
         if(this->vector->capacity == this->vector->length)
         {
-            //realloc e inserir
+            this->capacity *= 2;
+            this->buffer = (T*) realloc (this->buffer, this->capacity * sizeof(T));
         }
-        else
+        
+        for(size_t i = 0; i < this->vector->length; i++)
         {
-            for(size_t i = 0; i < this->vector->length; i++)
+            if(this->vector->buffer[i] > value)
             {
-                if(this->vector->buffer[i] > value)
+                if (i == this->vector->length - 1)
                 {
-                    // inserir aqui e shiftar
-                    //não precisa shiftar aqui
-                    if (i == this->vector->length - 1)
+                    this->vector->buffer[i] = value;
+                }
+                else
+                {
+                    for(size_t j = this->vector->length - 1; j >= i; j--)
                     {
-                        this->vector->buffer[i] = value;
-                    }
-                    else
-                    {
-                        for(size_t j = this->vector->length - 1; j >= i; j--)
-                        {
-                            this->vector->buffer[j+1] = this->vector->buffer[j];
-                        }
+                        this->vector->buffer[j+1] = this->vector->buffer[j];
                     }
                 }
             }
