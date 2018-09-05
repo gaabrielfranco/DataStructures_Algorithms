@@ -73,6 +73,18 @@ class Multiset
                 if(this->vector->buffer[i] > value)
                 {
                     // inserir aqui e shiftar
+                    //não precisa shiftar aqui
+                    if (i == this->vector->length - 1)
+                    {
+                        this->vector->buffer[i] = value;
+                    }
+                    else
+                    {
+                        for(size_t j = this->vector->length - 1; j >= i; j--)
+                        {
+                            this->vector->buffer[j+1] = this->vector->buffer[j];
+                        }
+                    }
                 }
             }
         }
