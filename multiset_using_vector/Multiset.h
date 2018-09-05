@@ -30,6 +30,31 @@ class Multiset
     Multiset<T>::Vector* vector;
 
    public:
+   class Iterator
+    {
+        Multiset<T>::Vector* pointer;
+
+       public:
+        Iterator(Multiset<T>::Vector* pointer) : pointer(pointer)
+        {
+        }
+        bool operator!=(const Iterator& it)
+        {
+            return this->pointer != it.pointer;
+        }
+
+        Iterator& operator++()
+        {
+            this->pointer++;
+            return *this;
+        }
+
+        Node& operator*()
+        {
+            return *(this->pointer);
+        }
+    };
+    
     Multiset()
     {
         this->vector = new Multiset<T>::Vector;
