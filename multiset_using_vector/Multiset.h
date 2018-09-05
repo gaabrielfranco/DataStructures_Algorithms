@@ -45,7 +45,7 @@ class Multiset
 
         Iterator& operator++()
         {
-            this->pointer++;
+            this->pointer->buffer++;
             return *this;
         }
 
@@ -64,11 +64,17 @@ class Multiset
     {
         if(this->vector->capacity == this->vector->length)
         {
-            //realloc
+            //realloc e inserir
         }
         else
         {
-            //inserir ordenado
+            for(size_t i = 0; i < this->vector->length; i++)
+            {
+                if(this->vector->buffer[i] > value)
+                {
+                    // inserir aqui e shiftar
+                }
+            }
         }
     }
 
