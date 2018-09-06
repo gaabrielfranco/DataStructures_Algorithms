@@ -2,6 +2,7 @@
 #define MULTISET_H
 
 #include <algorithm>
+#include <iostream>
 
 template <class T>
 class Multiset
@@ -433,7 +434,7 @@ class Multiset
         {
             for (size_t i = 0; i < it->num_ocurrences; i++)
             {
-                printf("%d ", it->value);
+                std::cout << it->value << " ";
             }
             it = it->next;
         }
