@@ -306,7 +306,6 @@ class Multiset
         return new_multiset;
     }
 
-    //Testar mais
     Multiset<T> intersection_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
@@ -375,6 +374,72 @@ class Multiset
     Multiset<T> difference_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
+        size_t lower = 0;
+        bool exists;
+
+        for(size_t i = 0; i < this->vector->length;)
+        {
+            lower = i;
+            exists = true;
+
+            while(this->vector->buffer[i] == this->vector->buffer[i+1])
+            {
+                i++;
+            }
+
+            size_t pos = multiset.b_search(this->vector->buffer[i], exists);
+
+            if (exists)
+            {
+                size_t lower_pos = pos;
+                size_t upper_pos = pos;
+
+                for (size_t j = pos - 1;; j--)
+                {
+                    if (j < 0)
+                    {
+                        lower_pos = 0;
+                        break;
+                    }
+                    else if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    {
+                        lower_pos = j;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                for (size_t j = pos + 1; j < multiset.vector->length; j++)
+                {
+                    if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    {
+                        upper_pos = j;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (i - lower + 1 > upper_pos - lower_pos + 1)
+                {
+                    for (size_t j = 0; j < (i - lower + 1) - (upper_pos - lower_pos + 1); j++)
+                    {
+                        new_multiset.insert(this->vector->buffer[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (size_t j = 0; j < i - lower + 1; j++)
+                {
+                    new_multiset.insert(this->vector->buffer[i]);
+                }
+            }
+            i++;
+        }
         
         return new_multiset;
     }

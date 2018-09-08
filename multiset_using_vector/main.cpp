@@ -10,12 +10,14 @@ int main()
     multiset.insert(2);
     multiset.insert(1);
     multiset.insert(1);
+    multiset.insert(1);
+    multiset.insert(3);
     // printf("%llu %llu\n", multiset.capacity(), multiset.length());
     multiset.print();
-    multiset.erase(1);
+    //multiset.erase(1);
     puts("");
     multiset.print();
-
+    
     multiset_2.insert(1);
     multiset_2.insert(0);
     multiset_2.insert(2);
@@ -24,7 +26,7 @@ int main()
     multiset_2.print();
 
     puts("");
-    auto m3 = multiset.intersection_multiset(multiset_2);
+    auto m3 = multiset.difference_multiset(multiset_2);
     m3.print();
 
     return 0;
