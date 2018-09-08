@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <ostream>
+#include <algorithm>
 
 template <class T>
 class Multiset
@@ -36,6 +36,48 @@ class Multiset
     {
         this->vector = new Multiset<T>::Vector;
     }
+
+    /*Multiset(const Multiset& multiset)
+    {
+        multiset.vector->buffer = (T*)malloc(this->vector->capacity * sizeof(T));
+
+        for(size_t i = 0; i < this->vector->length; i++)
+        {
+            multiset.vector->buffer[i] = this->vector->buffer[i];
+        }
+
+        multiset.vector->length = this->vector->length;
+        multiset.vector->capacity = this->vector->capacity;
+    }
+
+    Multiset(Multiset&& multiset)
+    {
+        this->vector = multiset.vector;
+        multiset.vector = nullptr;
+    }
+
+    Multiset& operator=(const Multiset& multiset)
+    {
+        multiset.vector->buffer = (T*)malloc(this->vector->capacity * sizeof(T));
+
+        for(size_t i = 0; i < this->vector->length; i++)
+        {
+            multiset.vector->buffer[i] = this->vector->buffer[i];
+        }
+
+        multiset.vector->length = this->vector->length;
+        multiset.vector->capacity = this->vector->capacity;
+
+        return *this;
+    }
+
+    Multiset& operator=(Multiset&& multiset)
+    {
+        this->vector = multiset.vector;
+        multiset.vector = nullptr;
+
+        return *this;
+    }*/
 
     ~Multiset()
     {
@@ -223,6 +265,59 @@ class Multiset
             std::cout << this->vector->buffer[i] << " ";
         }
         puts("} ");
+    }
+
+    Multiset<T> union_multiset(const Multiset<T>& multiset)
+    {
+        Multiset<T> new_multiset;
+
+        size_t i = 0;
+        size_t j = 0;
+
+        for(; i < this->vector->length && j < multiset.vector->length;)
+        {
+            if(this->vector->buffer[i] < multiset.vector->buffer[j])
+            {
+                new_multiset.insert(this->vector->buffer[i]);
+                i++;
+            }
+            else
+            {
+                new_multiset.insert(multiset.vector->buffer[j]);
+                j++;
+            }
+        }
+
+        if (i < this->vector->length)
+        {
+            for (; i < this->vector->length; i++)
+            {
+                new_multiset.insert(this->vector->buffer[i]);
+            }
+        }
+        else if (j < multiset.vector->length)
+        {
+            for(; j < multiset.vector->length; j++)
+            {
+                new_multiset.insert(multiset.vector->buffer[j]);
+            }
+        }
+
+        return new_multiset;
+    }
+
+    Multiset<T> intersection_multiset(const Multiset<T>& multiset)
+    {
+        Multiset<T> new_multiset;
+
+        return new_multiset;
+    }
+
+    Multiset<T> difference_multiset(const Multiset<T>& multiset)
+    {
+        Multiset<T> new_multiset;
+        
+        return new_multiset;
     }
 
     size_t length()
