@@ -92,7 +92,8 @@ class Multiset
             this->vector->buffer = (T*)realloc(
                 this->vector->buffer, this->vector->capacity * sizeof(T));
         }
-        else if (!this->vector->length)
+        
+        if (!this->vector->length)
         {
             this->vector->buffer[0] = value;
             this->vector->length++;
@@ -145,7 +146,6 @@ class Multiset
     {
         bool exists = true;
         size_t pos = this->b_search(value, exists);
-        std::cout << "Pos = " << pos << std::endl;
 
         if (exists)
         {
