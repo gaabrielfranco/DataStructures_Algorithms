@@ -22,9 +22,9 @@ int main()
     multiset_2.insert(1);
     multiset_2.insert(1);
     multiset_2.print();
-    
+
     puts("");
-    auto m3 = multiset.union_multiset(multiset_2);
+    auto m3 = multiset.intersection_multiset(multiset_2);
     m3.print();
 
     return 0;
