@@ -269,9 +269,17 @@ class Multiset
                 {
                     if (this->head == this->tail)
                     {
-                        delete it;
-
                         this->head = this->tail = nullptr;
+                    }
+                    else if (it == this->head)
+                    {
+                        this->head = it->next;
+                        it->next->previous = nullptr;
+                    }
+                    else if (it == this->tail)
+                    {
+                        this->tail = it->previous;
+                        it->previous->next = nullptr;
                     }
                     else
                     {
@@ -464,7 +472,7 @@ class Multiset
         throw "Value doesn't exists.";
     }
 
-    size_t length()
+    size_t get_length()
     {
         return this->length;
     }

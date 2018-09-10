@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include "Multiset.h"
-#define NUM_ELEMENTS 100
+#define NUM_ELEMENTS 10000
 
 typedef std::chrono::high_resolution_clock Clock;
 
@@ -40,9 +40,9 @@ int main(int argc, char** argv)
         printf("0 pertence ao Multiset 2 ? %s\n\n",
                m2.has(0) ? "True" : "False");
 
-        printf("0 aparece no Multiset 1 %d vezes\n\n", multiset.frequency(0));
+        printf("0 aparece no Multiset 1 %lu vezes\n\n", multiset.frequency(0));
 
-        printf("1 aparece no Multiset 2 %d vezes\n\n", m2.frequency(1));
+        printf("1 aparece no Multiset 2 %lu vezes\n\n", m2.frequency(1));
 
         puts("Multiset 1 uniao com o Multiset 2");
         auto m3 = multiset.union_multiset(m2);
@@ -331,7 +331,7 @@ int main(int argc, char** argv)
         start = Clock::now();
         for (int i = 0; i < NUM_ELEMENTS; i++)
         {
-            m1.remove(m1_elements[i]);
+            m1.erase(m1_elements[i]);
         }
 
         end = Clock::now();
@@ -361,6 +361,7 @@ int main(int argc, char** argv)
         std::cout << "defaut: to run a simple test\n";
         std::cout << "--bench1 to run the benchmark 1\n";
         std::cout << "--bench2 to run the benchmark 2\n";
+        std::cout << "--bench3 to run the benchmark 3\n";
         std::cout << "--h to help\n";
     }
 
