@@ -1,9 +1,9 @@
 #ifndef MULTISET_H
 #define MULTISET_H
 
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
-#include <algorithm>
 
 template <class T>
 class Multiset
@@ -18,8 +18,8 @@ class Multiset
         Vector()
         {
             this->length = 0;
-            this->capacity = 1000;
-            this->buffer = (T*)malloc(1000 * sizeof(T));
+            this->capacity = 1024;
+            this->buffer = (T*)malloc(1024 * sizeof(T));
         }
 
         ~Vector()
@@ -39,7 +39,8 @@ class Multiset
 
     /*Multiset(const Multiset& multiset)
     {
-        multiset.vector->buffer = (T*)malloc(this->vector->capacity * sizeof(T));
+        multiset.vector->buffer = (T*)malloc(this->vector->capacity *
+    sizeof(T));
 
         for(size_t i = 0; i < this->vector->length; i++)
         {
@@ -58,7 +59,8 @@ class Multiset
 
     Multiset& operator=(const Multiset& multiset)
     {
-        multiset.vector->buffer = (T*)malloc(this->vector->capacity * sizeof(T));
+        multiset.vector->buffer = (T*)malloc(this->vector->capacity *
+    sizeof(T));
 
         for(size_t i = 0; i < this->vector->length; i++)
         {
@@ -92,7 +94,7 @@ class Multiset
             this->vector->buffer = (T*)realloc(
                 this->vector->buffer, this->vector->capacity * sizeof(T));
         }
-        
+
         if (!this->vector->length)
         {
             this->vector->buffer[0] = value;
@@ -169,7 +171,7 @@ class Multiset
         {
             for (size_t i = pos - 1;; i--)
             {
-                if (i < 0)
+                if (i == 0)
                 {
                     lower_pos = 0;
                     break;
@@ -226,7 +228,7 @@ class Multiset
         {
             for (size_t i = pos - 1;; i--)
             {
-                if (i < 0)
+                if (i == 0)
                 {
                     lower_pos = 0;
                     break;
@@ -252,9 +254,13 @@ class Multiset
                     break;
                 }
             }
-        }
 
-        return upper_pos - lower_pos + 1;
+            return upper_pos - lower_pos + 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     void print()
@@ -274,9 +280,9 @@ class Multiset
         size_t i = 0;
         size_t j = 0;
 
-        for(; i < this->vector->length && j < multiset.vector->length;)
+        for (; i < this->vector->length && j < multiset.vector->length;)
         {
-            if(this->vector->buffer[i] < multiset.vector->buffer[j])
+            if (this->vector->buffer[i] < multiset.vector->buffer[j])
             {
                 new_multiset.insert(this->vector->buffer[i]);
                 i++;
@@ -297,7 +303,7 @@ class Multiset
         }
         else if (j < multiset.vector->length)
         {
-            for(; j < multiset.vector->length; j++)
+            for (; j < multiset.vector->length; j++)
             {
                 new_multiset.insert(multiset.vector->buffer[j]);
             }
@@ -312,12 +318,12 @@ class Multiset
         size_t lower = 0;
         bool exists;
 
-        for(size_t i = 0; i < this->vector->length;)
+        for (size_t i = 0; i < this->vector->length;)
         {
             lower = i;
             exists = true;
 
-            while(this->vector->buffer[i] == this->vector->buffer[i+1])
+            while (this->vector->buffer[i] == this->vector->buffer[i + 1])
             {
                 i++;
             }
@@ -331,12 +337,13 @@ class Multiset
 
                 for (size_t j = pos - 1;; j--)
                 {
-                    if (j < 0)
+                    if (j == 0)
                     {
                         lower_pos = 0;
                         break;
                     }
-                    else if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    else if (multiset.vector->buffer[pos] ==
+                             multiset.vector->buffer[j])
                     {
                         lower_pos = j;
                     }
@@ -348,7 +355,8 @@ class Multiset
 
                 for (size_t j = pos + 1; j < multiset.vector->length; j++)
                 {
-                    if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    if (multiset.vector->buffer[pos] ==
+                        multiset.vector->buffer[j])
                     {
                         upper_pos = j;
                     }
@@ -358,7 +366,8 @@ class Multiset
                     }
                 }
 
-                auto num_ocurrences = std::min(i - lower + 1, upper_pos - lower_pos + 1);
+                auto num_ocurrences =
+                    std::min(i - lower + 1, upper_pos - lower_pos + 1);
 
                 for (size_t j = 0; j < num_ocurrences; j++)
                 {
@@ -377,12 +386,12 @@ class Multiset
         size_t lower = 0;
         bool exists;
 
-        for(size_t i = 0; i < this->vector->length;)
+        for (size_t i = 0; i < this->vector->length;)
         {
             lower = i;
             exists = true;
 
-            while(this->vector->buffer[i] == this->vector->buffer[i+1])
+            while (this->vector->buffer[i] == this->vector->buffer[i + 1])
             {
                 i++;
             }
@@ -396,12 +405,13 @@ class Multiset
 
                 for (size_t j = pos - 1;; j--)
                 {
-                    if (j < 0)
+                    if (j == 0)
                     {
                         lower_pos = 0;
                         break;
                     }
-                    else if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    else if (multiset.vector->buffer[pos] ==
+                             multiset.vector->buffer[j])
                     {
                         lower_pos = j;
                     }
@@ -413,7 +423,8 @@ class Multiset
 
                 for (size_t j = pos + 1; j < multiset.vector->length; j++)
                 {
-                    if (multiset.vector->buffer[pos] == multiset.vector->buffer[j])
+                    if (multiset.vector->buffer[pos] ==
+                        multiset.vector->buffer[j])
                     {
                         upper_pos = j;
                     }
@@ -425,7 +436,8 @@ class Multiset
 
                 if (i - lower + 1 > upper_pos - lower_pos + 1)
                 {
-                    for (size_t j = 0; j < (i - lower + 1) - (upper_pos - lower_pos + 1); j++)
+                    for (size_t j = 0;
+                         j < (i - lower + 1) - (upper_pos - lower_pos + 1); j++)
                     {
                         new_multiset.insert(this->vector->buffer[i]);
                     }
@@ -440,7 +452,7 @@ class Multiset
             }
             i++;
         }
-        
+
         return new_multiset;
     }
 

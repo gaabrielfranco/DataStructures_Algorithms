@@ -36,7 +36,11 @@
         "sstream": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "ctime": "cpp",
+        "chrono": "cpp",
+        "cstring": "cpp",
+        "ratio": "cpp"
     },
     "editor.formatOnSave": true
 }
