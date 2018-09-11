@@ -37,50 +37,6 @@ class Multiset
         this->vector = new Multiset<T>::Vector;
     }
 
-    /*Multiset(const Multiset& multiset)
-    {
-        multiset.vector->buffer = (T*)malloc(this->vector->capacity *
-    sizeof(T));
-
-        for(size_t i = 0; i < this->vector->length; i++)
-        {
-            multiset.vector->buffer[i] = this->vector->buffer[i];
-        }
-
-        multiset.vector->length = this->vector->length;
-        multiset.vector->capacity = this->vector->capacity;
-    }
-
-    Multiset(Multiset&& multiset)
-    {
-        this->vector = multiset.vector;
-        multiset.vector = nullptr;
-    }
-
-    Multiset& operator=(const Multiset& multiset)
-    {
-        multiset.vector->buffer = (T*)malloc(this->vector->capacity *
-    sizeof(T));
-
-        for(size_t i = 0; i < this->vector->length; i++)
-        {
-            multiset.vector->buffer[i] = this->vector->buffer[i];
-        }
-
-        multiset.vector->length = this->vector->length;
-        multiset.vector->capacity = this->vector->capacity;
-
-        return *this;
-    }
-
-    Multiset& operator=(Multiset&& multiset)
-    {
-        this->vector = multiset.vector;
-        multiset.vector = nullptr;
-
-        return *this;
-    }*/
-
     ~Multiset()
     {
         delete this->vector;
