@@ -1,4 +1,4 @@
-FLAGS= -std=c++17 -g
+FLAGS= -std=c++17 -O3
 multiset: main.o
 	g++ $(FLAGS) main.o -o multiset
 
