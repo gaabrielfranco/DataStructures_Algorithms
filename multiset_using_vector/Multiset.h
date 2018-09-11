@@ -127,7 +127,7 @@ class Multiset
         {
             for (size_t i = pos - 1;; i--)
             {
-                if (i == 0)
+                if (i <= 0)
                 {
                     lower_pos = 0;
                     break;
@@ -184,7 +184,7 @@ class Multiset
         {
             for (size_t i = pos - 1;; i--)
             {
-                if (i == 0)
+                if (i <= 0)
                 {
                     lower_pos = 0;
                     break;
@@ -243,9 +243,15 @@ class Multiset
                 new_multiset.insert(this->vector->buffer[i]);
                 i++;
             }
+            else if (this->vector->buffer[i] > multiset.vector->buffer[j])
+            {
+                new_multiset.insert(multiset.vector->buffer[j]);
+                j++;
+            }
             else
             {
                 new_multiset.insert(multiset.vector->buffer[j]);
+                i++;
                 j++;
             }
         }

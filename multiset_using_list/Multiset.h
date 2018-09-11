@@ -143,13 +143,13 @@ class Multiset
         return *this;
     }
 
-    void insert(T value)
+    void insert(T value, size_t ocurrences = 1)
     {
         for (auto it = this->head; it != nullptr;)
         {
             if (it->value == value)
             {
-                it->num_ocurrences++;
+                it->num_ocurrences += ocurrences;
                 return;
             }
             it = it->next;
@@ -157,7 +157,7 @@ class Multiset
 
         auto new_node = new Multiset<T>::Node;
         new_node->value = value;
-        new_node->num_ocurrences = 1;
+        new_node->num_ocurrences = ocurrences;
 
         if (!this->length)
         {
@@ -344,22 +344,31 @@ class Multiset
     {
         Multiset<T> new_multiset;
 
-        for (auto it = this->head; it != nullptr;)
-        {
-            for (size_t i = 0; i < it->num_ocurrences; i++)
-            {
-                new_multiset.insert(it->value);
-            }
-            it = it->next;
-        }
+        auto it1 = this->head;
+        auto it2 = multiset.head;
 
-        for (auto it = multiset.head; it != nullptr;)
+        for (; it1 != nullptr && it2 != nullptr;)
         {
-            for (size_t i = 0; i < it->num_ocurrences; i++)
+            if (it1->value == it2->value)
             {
-                new_multiset.insert(it->value);
+                size_t num_elem =
+                    std::max(it1->num_ocurrences, it2->num_ocurrences);
+
+                new_multiset.insert(it1->value, num_elem);
+
+                it1 = it1->next;
+                it2 = it2->next;
             }
-            it = it->next;
+            else if (it1->value > it2->value)
+            {
+                new_multiset.insert(it2->value, it2->num_ocurrences);
+                it2 = it2->next;
+            }
+            else
+            {
+                new_multiset.insert(it1->value, it1->num_ocurrences);
+                it1 = it1->next;
+            }
         }
 
         return new_multiset;
@@ -379,10 +388,7 @@ class Multiset
                 size_t num_elem =
                     std::min(it1->num_ocurrences, it2->num_ocurrences);
 
-                for (size_t i = 0; i < num_elem; i++)
-                {
-                    new_multiset.insert(it1->value);
-                }
+                new_multiset.insert(it1->value, num_elem);
 
                 it1 = it1->next;
                 it2 = it2->next;
@@ -413,11 +419,8 @@ class Multiset
             {
                 if (it1->num_ocurrences > it2->num_ocurrences)
                 {
-                    for (size_t i = 0;
-                         i < it1->num_ocurrences - it2->num_ocurrences; i++)
-                    {
-                        new_multiset.insert(it1->value);
-                    }
+                    new_multiset.insert(
+                        it1->value, it1->num_ocurrences - it2->num_ocurrences);
                 }
 
                 it1 = it1->next;
@@ -429,20 +432,14 @@ class Multiset
             }
             else
             {
-                for (size_t i = 0; i < it1->num_ocurrences; i++)
-                {
-                    new_multiset.insert(it1->value);
-                }
+                new_multiset.insert(it1->value, it1->num_ocurrences);
                 it1 = it1->next;
             }
         }
 
         for (; it1 != nullptr; it1->next)
         {
-            for (size_t i = 0; i < it1->num_ocurrences; i++)
-            {
-                new_multiset.insert(it1->value);
-            }
+            new_multiset.insert(it1->value, it1->num_ocurrences);
         }
 
         return new_multiset;

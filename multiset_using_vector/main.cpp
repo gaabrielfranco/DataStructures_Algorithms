@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include "Multiset.h"
-#define NUM_ELEMENTS 10000
+#define NUM_ELEMENTS 100000
 
 typedef std::chrono::high_resolution_clock Clock;
 
@@ -82,10 +82,10 @@ int main(int argc, char** argv)
 
         auto end = Clock::now();
         std::cout << "Insertion duration in M1: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insert in M2
         start = Clock::now();
@@ -96,56 +96,50 @@ int main(int argc, char** argv)
 
         end = Clock::now();
         std::cout << "Insertion duration in M2: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Union
         start = Clock::now();
         auto m3 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Union duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insersection
         start = Clock::now();
         auto m4 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Insersection duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Difference
         start = Clock::now();
         auto m5 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Difference duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
-        // Remove
+        // Cleaning M1
         start = Clock::now();
-        m1.remove(50);
-        end = Clock::now();
-        std::cout << "Remove 50 duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
-                         .count();
-        std::cout << "ns\n";
+        for (int i = 0; i < NUM_ELEMENTS; i++)
+        {
+            m1.erase(i);
+        }
 
-        // Erase
-        start = Clock::now();
-        m1.erase(80);
         end = Clock::now();
-        std::cout << "Erase 80 duration: ";
+        std::cout << "Duration of Cleaning of M1: ";
         std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
                                                                           start)
                          .count();
@@ -178,10 +172,10 @@ int main(int argc, char** argv)
 
         auto end = Clock::now();
         std::cout << "Insertion duration in M1: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insert in M2
         start = Clock::now();
@@ -192,56 +186,50 @@ int main(int argc, char** argv)
 
         end = Clock::now();
         std::cout << "Insertion duration in M2: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Union
         start = Clock::now();
         auto m3 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Union duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insersection
         start = Clock::now();
         auto m4 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Insersection duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Difference
         start = Clock::now();
         auto m5 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Difference duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
-        // Remove
+        // Cleaning M1
         start = Clock::now();
-        m1.remove(0);
-        end = Clock::now();
-        std::cout << "Remove 0 duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
-                         .count();
-        std::cout << "ns\n";
+        for (int i = 0; i < NUM_ELEMENTS; i++)
+        {
+            m1.erase(0);
+        }
 
-        // Erase
-        start = Clock::now();
-        m1.erase(0);
         end = Clock::now();
-        std::cout << "Erase 0 duration: ";
+        std::cout << "Duration of Cleaning of M1: ";
         std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
                                                                           start)
                          .count();
@@ -249,7 +237,11 @@ int main(int argc, char** argv)
 
         // Cleaning M2
         start = Clock::now();
-        m2.erase(0);
+        for (int i = 0; i < NUM_ELEMENTS; i++)
+        {
+            m2.remove(0);
+        }
+
         end = Clock::now();
         std::cout << "Duration of Cleaning of M2: ";
         std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
@@ -276,10 +268,10 @@ int main(int argc, char** argv)
 
         auto end = Clock::now();
         std::cout << "Insertion duration in M1: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insert in M2
         start = Clock::now();
@@ -292,40 +284,40 @@ int main(int argc, char** argv)
 
         end = Clock::now();
         std::cout << "Insertion duration in M2: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Union
         start = Clock::now();
         auto m3 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Union duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Insersection
         start = Clock::now();
         auto m4 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Insersection duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Difference
         start = Clock::now();
         auto m5 = m1.union_multiset(m2);
         end = Clock::now();
         std::cout << "Difference duration: ";
-        std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
-                                                                          start)
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
                          .count();
-        std::cout << "ns\n";
+        std::cout << "ms\n";
 
         // Cleaning M1
         start = Clock::now();
@@ -335,7 +327,7 @@ int main(int argc, char** argv)
         }
 
         end = Clock::now();
-        std::cout << "Duration of Cleaning of M2: ";
+        std::cout << "Duration of Cleaning of M1: ";
         std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end -
                                                                           start)
                          .count();
