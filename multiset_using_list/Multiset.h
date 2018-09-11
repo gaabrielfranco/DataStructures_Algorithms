@@ -369,25 +369,32 @@ class Multiset
     {
         Multiset<T> new_multiset;
 
-        for (auto it = this->head; it != nullptr;)
+        auto it1 = this->head;
+        auto it2 = multiset.head;
+
+        for (; it1 != nullptr && it2 != nullptr;)
         {
-            for (auto it2 = multiset.head; it2 != nullptr;)
+            if (it1->value == it2->value)
             {
-                if (it->value == it2->value)
+                size_t num_elem =
+                    std::min(it1->num_ocurrences, it2->num_ocurrences);
+
+                for (size_t i = 0; i < num_elem; i++)
                 {
-                    size_t num_elem =
-                        std::min(it->num_ocurrences, it2->num_ocurrences);
-
-                    for (size_t i = 0; i < num_elem; i++)
-                    {
-                        new_multiset.insert(it->value);
-                    }
-
-                    break;
+                    new_multiset.insert(it1->value);
                 }
+
+                it1 = it1->next;
                 it2 = it2->next;
             }
-            it = it->next;
+            else if (it1->value > it2->value)
+            {
+                it2 = it2->next;
+            }
+            else
+            {
+                it1 = it1->next;
+            }
         }
 
         return new_multiset;
@@ -396,40 +403,46 @@ class Multiset
     Multiset<T> difference_multiset(const Multiset<T>& multiset)
     {
         Multiset<T> new_multiset;
-        bool match = false;
 
-        for (auto it = this->head; it != nullptr;)
+        auto it1 = this->head;
+        auto it2 = multiset.head;
+
+        for (; it1 != nullptr && it2 != nullptr;)
         {
-            for (auto it2 = multiset.head; it2 != nullptr;)
+            if (it1->value == it2->value)
             {
-                if (it->value == it2->value)
+                if (it1->num_ocurrences > it2->num_ocurrences)
                 {
-                    if (it->num_ocurrences > it2->num_ocurrences)
+                    for (size_t i = 0;
+                         i < it1->num_ocurrences - it2->num_ocurrences; i++)
                     {
-                        size_t num_elem =
-                            it->num_ocurrences - it2->num_ocurrences;
-
-                        for (size_t i = 0; i < num_elem; i++)
-                        {
-                            new_multiset.insert(it->value);
-                        }
+                        new_multiset.insert(it1->value);
                     }
-                    match = true;
-                    break;
                 }
+
+                it1 = it1->next;
                 it2 = it2->next;
             }
-
-            if (!match)
+            else if (it1->value > it2->value)
             {
-                for (size_t i = 0; i < it->num_ocurrences; i++)
-                {
-                    new_multiset.insert(it->value);
-                }
+                it2 = it2->next;
             }
+            else
+            {
+                for (size_t i = 0; i < it1->num_ocurrences; i++)
+                {
+                    new_multiset.insert(it1->value);
+                }
+                it1 = it1->next;
+            }
+        }
 
-            it = it->next;
-            match = false;
+        for (; it1 != nullptr; it1->next)
+        {
+            for (size_t i = 0; i < it1->num_ocurrences; i++)
+            {
+                new_multiset.insert(it1->value);
+            }
         }
 
         return new_multiset;
