@@ -2,8 +2,13 @@
 #include <iostream>
 
 template <class T>
+bool defaut_comp(T a, T b)
+{
+    return a < b;
+}
 
-void selection_sort(T A[], size_t n, size_t k)
+template <class T>
+void selection_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
 {
     size_t min;
     T aux;
@@ -12,7 +17,7 @@ void selection_sort(T A[], size_t n, size_t k)
         min = i;
         for (size_t j = i + 1; j < n; j++)
         {
-            if (A[j] < A[min])
+            if (comp(A[j], A[min]))
             {
                 min = j;
             }
@@ -24,7 +29,7 @@ void selection_sort(T A[], size_t n, size_t k)
 }
 
 template <class T>
-void insertion_sort(T A[], size_t n, size_t k)
+void insertion_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
 {
     T aux;
     size_t j, pivot;
@@ -34,7 +39,7 @@ void insertion_sort(T A[], size_t n, size_t k)
         if (i > k - 1)
         {
             pivot = k - 1;
-            if (A[i] <= A[k])
+            if (comp(A[i], A[k]))
             {
                 A[i] = A[k];
             }
@@ -43,7 +48,7 @@ void insertion_sort(T A[], size_t n, size_t k)
         {
             pivot = i - 1;
         }
-        for (j = pivot; j != ULONG_MAX && aux < A[j]; j--)
+        for (j = pivot; j != ULONG_MAX && comp(aux, A[j]); j--)
         {
             A[j + 1] = A[j];
         }
