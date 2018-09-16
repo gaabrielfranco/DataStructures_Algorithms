@@ -56,3 +56,89 @@ void insertion_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
         A[j + 1] = aux;
     }
 }
+
+template <class T>
+void heapify(T A[], size_t n, size_t root, bool (*comp)(T, T) = defaut_comp)
+{
+    size_t smallest = root;
+    size_t left = 2 * root + 1;
+    size_t right = 2 * root + 2;
+
+    if (left < n && comp(A[left], A[smallest]))
+    {
+        smallest = left;
+    }
+
+    if (right < n && comp(A[right], A[smallest]))
+    {
+        smallest = right;
+    }
+
+    if (smallest != root)
+    {
+        T aux = A[root];
+        A[root] = A[smallest];
+        A[smallest] = aux;
+        heapify(A, n, smallest);
+    }
+}
+
+template <class T>
+void heap_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
+{
+    T aux;
+
+    for (size_t i = (n / 2) - 1; i != ULONG_MAX; i--)
+    {
+        heapify(A, n, i);
+    }
+
+    for (size_t i = n - 1; i > (n - 1 - k); i--)
+    {
+        aux = A[0];
+        A[0] = A[i];
+        A[i] = aux;
+        heapify(A, i, 0);
+    }
+}
+
+template <class T>
+size_t partition(T A[], size_t p, size_t r, size_t k,
+                 bool (*comp)(T, T) = defaut_comp)
+{
+    T pivot = A[p];
+    size_t q = p;
+    T aux;
+    for (size_t i = p + 1; i <= r; i++)
+    {
+        if (comp(A[i], pivot))
+        {
+            q++;
+            aux = A[q];
+            A[q] = A[i];
+            A[i] = aux;
+        }
+    }
+    aux = A[q];
+    A[q] = A[p];
+    A[p] = aux;
+    return q;
+}
+
+template <class T>
+void q_sort(T A[], size_t p, size_t r, size_t k,
+            bool (*comp)(T, T) = defaut_comp)
+{
+    if (p < r)
+    {
+        size_t q = partition(A, p, r, k, comp);
+        q_sort(A, p, q, k, comp);
+        q_sort(A, q + 1, r, k, comp);
+    }
+}
+
+template <class T>
+void quick_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
+{
+    q_sort(A, 0, n - 1, k, comp);
+}
