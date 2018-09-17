@@ -1,5 +1,6 @@
 #include <climits>
 #include <iostream>
+#include <random>
 
 template <class T>
 bool defaut_comp(T a, T b)
@@ -106,9 +107,17 @@ template <class T>
 size_t partition(T A[], size_t p, size_t r, size_t k,
                  bool (*comp)(T, T) = defaut_comp)
 {
+    std::random_device random_device;
+    std::mt19937 engine{random_device()};
+    std::uniform_int_distribution<size_t> dist(p, r);
+    size_t random_element = dist(engine);
+
+    T aux = A[p];
+    A[p] = A[random_element];
+    A[random_element] = aux;
+
     T pivot = A[p];
     size_t q = p;
-    T aux;
     for (size_t i = p + 1; i <= r; i++)
     {
         if (comp(A[i], pivot))
@@ -132,8 +141,15 @@ void q_sort(T A[], size_t p, size_t r, size_t k,
     if (p < r)
     {
         size_t q = partition(A, p, r, k, comp);
-        q_sort(A, p, q, k, comp);
-        q_sort(A, q + 1, r, k, comp);
+        if (q - p + 1 >= k)
+        {
+            q_sort(A, p, q, k, comp);
+        }
+        else
+        {
+            q_sort(A, p, q, k, comp);
+            q_sort(A, q + 1, r, k, comp);
+        }
     }
 }
 
