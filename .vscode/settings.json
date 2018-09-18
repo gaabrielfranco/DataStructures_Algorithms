@@ -44,5 +44,6 @@
         "functional": "cpp",
         "numeric": "cpp"
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "C_Cpp.errorSquiggles": "Disabled"
 }
