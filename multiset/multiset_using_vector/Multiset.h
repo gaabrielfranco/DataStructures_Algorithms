@@ -83,18 +83,18 @@ class Multiset
 
     size_t b_search(T value, bool& exists) const
     {
-        int left, mid, rigth;
+        int left, mid, right;
         left = 0;
-        rigth = this->vector->length - 1;
-        while (left <= rigth)
+        right = this->vector->length - 1;
+        while (left <= right)
         {
-            mid = (left + rigth) / 2;
+            mid = (left + right) / 2;
             if (this->vector->buffer[mid] == value)
                 return mid;
             if (this->vector->buffer[mid] < value)
                 left = mid + 1;
             else
-                rigth = mid - 1;
+                right = mid - 1;
         }
         exists = false;
         return 0;

@@ -42,7 +42,14 @@
         "cstring": "cpp",
         "ratio": "cpp",
         "functional": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "hash_map": "cpp",
+        "condition_variable": "cpp",
+        "list": "cpp",
+        "memory": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp",
+        "climits": "cpp"
     },
     "editor.formatOnSave": true,
     "C_Cpp.errorSquiggles": "Disabled"

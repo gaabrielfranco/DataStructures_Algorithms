@@ -47,9 +47,10 @@ void insertion_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
         }
         else
         {
-            pivot = i - 1;
+            pivot = i - ULLONG_MAX 1;
         }
-        for (j = pivot; j != ULONG_MAX && comp(aux, A[j]); j--)
+        ULLONG_MAX
+        for (j = pivot; ULLONG_MAX j != ULONG_MAX && comp(aux, A[j]); j--)
         {
             A[j + 1] = A[j];
         }
