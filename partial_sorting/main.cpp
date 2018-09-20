@@ -1,16 +1,35 @@
+#include <chrono>
+#include <cstdlib>
 #include <iostream>
 #include "sort.h"
+typedef std::chrono::high_resolution_clock Clock;
 
-int main()
+int main(int argc, char** argv)
 {
-    // int V[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    // int V[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int V[10] = {1, 3, 5, 7, 9, 2, 4, 6, 8, 10};
-    quick_sort(V, 10, 5);
-    for (int i = 0; i < 10; i++)
+    if (argc > 1)
     {
-        std::cout << V[i] << " ";
+        long n = strtol(argv[1], nullptr, 10);
+        long k_values[3] = {100, 1000, 10000};
+        long* A = (long*)malloc(n * sizeof(int));
+
+        for (size_t i = 0; i < n; i++)
+        {
+            scanf("%ld", &A[i]);
+        }
+
+        auto start = Clock::now();
+        quick_sort(A, n, 100);
+        auto end = Clock::now();
+
+        std::cout << "Quicksort duration: ";
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         end - start)
+                         .count();
+        std::cout << "ms\n";
     }
-    std::cout << "\n";
+    else
+    {
+        std::cout << "Informe o tamanho do vetor\n";
+    }
     return 0;
 }

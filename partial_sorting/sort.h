@@ -47,10 +47,9 @@ void insertion_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
         }
         else
         {
-            pivot = i - ULLONG_MAX 1;
+            pivot = i - 1;
         }
-        ULLONG_MAX
-        for (j = pivot; ULLONG_MAX j != ULONG_MAX && comp(aux, A[j]); j--)
+        for (j = pivot; j != ULONG_MAX && comp(aux, A[j]); j--)
         {
             A[j + 1] = A[j];
         }
@@ -95,12 +94,32 @@ void heap_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
         heapify(A, n, i);
     }
 
-    for (size_t i = n - 1; i > (n - 1 - k); i--)
+    if (k < n)
     {
-        aux = A[0];
-        A[0] = A[i];
-        A[i] = aux;
-        heapify(A, i, 0);
+        for (size_t i = n - 1; i >= (n - k); i--)
+        {
+            aux = A[0];
+            A[0] = A[i];
+            A[i] = aux;
+            heapify(A, i, 0);
+        }
+    }
+    else
+    {
+        for (size_t i = n - 1; i > (n - k); i--)
+        {
+            aux = A[0];
+            A[0] = A[i];
+            A[i] = aux;
+            heapify(A, i, 0);
+        }
+    }
+
+    for (size_t i = n - 1, j = 0; j < (k / 2); i--, j++)
+    {
+        aux = A[i];
+        A[i] = A[j];
+        A[j] = aux;
     }
 }
 
