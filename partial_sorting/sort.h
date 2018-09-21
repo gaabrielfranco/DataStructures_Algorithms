@@ -115,17 +115,16 @@ void heap_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
         }
     }
 
-    for (size_t i = n - 1, j = 0; j < (k / 2); i--, j++)
+    /*for (size_t i = n - 1, j = 0; j < (k / 2); i--, j++)
     {
         aux = A[i];
         A[i] = A[j];
         A[j] = aux;
-    }
+    }*/
 }
 
 template <class T>
-size_t partition(T A[], size_t p, size_t r, size_t k,
-                 bool (*comp)(T, T) = defaut_comp)
+size_t partition(T A[], size_t p, size_t r, bool (*comp)(T, T) = defaut_comp)
 {
     std::random_device random_device;
     std::mt19937 engine{random_device()};
@@ -160,7 +159,7 @@ void q_sort(T A[], size_t p, size_t r, size_t k,
 {
     if (p < r)
     {
-        size_t q = partition(A, p, r, k, comp);
+        size_t q = partition(A, p, r, comp);
         if (q - p + 1 >= k)
         {
             q_sort(A, p, q, k, comp);
