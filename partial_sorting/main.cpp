@@ -57,7 +57,6 @@ void benchmark(long A[], long B[], size_t n, size_t k_values[])
                 std::chrono::duration_cast<std::chrono::milliseconds>(end -
                                                                       start)
                     .count();
-            // std::cout << time_values[j] << "ms\n";
         }
         long values_mean = mean(time_values, 100);
         long values_std = standart_deviation(time_values, 100, values_mean);

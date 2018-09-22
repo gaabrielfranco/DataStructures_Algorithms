@@ -124,50 +124,52 @@ void heap_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
 }
 
 template <class T>
-size_t partition(T A[], size_t p, size_t r, bool (*comp)(T, T) = defaut_comp)
+long partition(T A[], size_t l, size_t r, bool (*comp)(T, T) = defaut_comp)
 {
-    std::random_device random_device;
-    std::mt19937 engine{random_device()};
-    std::uniform_int_distribution<size_t> dist(p, r);
-    size_t random_element = dist(engine);
+    T aux;
+    long i = l - 1;
+    long j = r;
+    T v = A[r];
 
-    T aux = A[p];
-    A[p] = A[random_element];
-    A[random_element] = aux;
-
-    T pivot = A[p];
-    size_t q = p;
-    for (size_t i = p + 1; i <= r; i++)
+    for (;;)
     {
-        if (comp(A[i], pivot))
+        while (comp(A[++i], v))
+            ;
+        while (comp(v, A[--j]))
         {
-            q++;
-            aux = A[q];
-            A[q] = A[i];
-            A[i] = aux;
+            if (j == l)
+            {
+                break;
+            }
         }
+        if (i >= j)
+        {
+            break;
+        }
+        aux = A[i];
+        A[i] = A[j];
+        A[j] = aux;
     }
-    aux = A[q];
-    A[q] = A[p];
-    A[p] = aux;
-    return q;
+    aux = A[i];
+    A[i] = A[r];
+    A[r] = aux;
+    return i;
 }
 
 template <class T>
-void q_sort(T A[], size_t p, size_t r, size_t k,
-            bool (*comp)(T, T) = defaut_comp)
+void q_sort(T A[], long l, long r, size_t k, bool (*comp)(T, T) = defaut_comp)
 {
-    if (p < r)
+    if (l < r)
     {
-        size_t q = partition(A, p, r, comp);
-        if (q - p + 1 >= k)
+        long i = partition(A, l, r, comp);
+        if (i - l + 1 > k)
         {
-            q_sort(A, p, q, k, comp);
+            q_sort(A, l, i - 1, k, comp);
         }
         else
         {
-            q_sort(A, p, q, k, comp);
-            q_sort(A, q + 1, r, k, comp);
+            q_sort(A, l, i - 1, k, comp);
+            q_sort(A, i + 1, r, k, comp);
         }
     }
 }
