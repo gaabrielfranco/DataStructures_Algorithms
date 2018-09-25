@@ -114,13 +114,6 @@ void heap_sort(T A[], size_t n, size_t k, bool (*comp)(T, T) = defaut_comp)
             heapify(A, i, 0);
         }
     }
-
-    /*for (size_t i = n - 1, j = 0; j < (k / 2); i--, j++)
-    {
-        aux = A[i];
-        A[i] = A[j];
-        A[j] = aux;
-    }*/
 }
 
 template <class T>
